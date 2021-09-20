@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { BooksController } from './book.controller';
-import { Book, BookSchema } from './book.model';
-import { BooksService } from './book.service';
+import { BooksController } from './books.controller';
+import { Book, BookSchema } from './books.model';
+import { BooksService } from './books.service';
 
 @Module({
   controllers: [BooksController],

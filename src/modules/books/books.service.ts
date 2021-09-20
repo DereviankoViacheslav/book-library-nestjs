@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Book, BookDocument } from './book.model';
+import { Book, BookDocument } from './books.model';
+import { CreateBookDto } from './dto/create-book.dto';
 
 @Injectable()
 export class BooksService {
@@ -9,7 +10,7 @@ export class BooksService {
     @InjectModel(Book.name) private readonly BookModel: Model<BookDocument>,
   ) {}
 
-  create(dto: BookDocument): Promise<BookDocument> {
+  create(dto: CreateBookDto): Promise<BookDocument> {
     return this.BookModel.create(dto);
   }
 
@@ -18,10 +19,11 @@ export class BooksService {
   }
 
   getAll(): Promise<BookDocument[]> {
+    console.log('BooksService/getAll --->>>');
     return this.BookModel.find().exec();
   }
 
-  update(id: string, dto: BookDocument): Promise<BookDocument | null> {
+  update(id: string, dto: CreateBookDto): Promise<BookDocument | null> {
     return this.BookModel.findByIdAndUpdate(id, dto, { new: true }).exec();
   }
 

@@ -8,8 +8,11 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { BookDocument } from './book.model';
-import { BooksService } from './book.service';
+import { JoiValidationPipe } from 'src/common/pipes/joi-validation.pipe';
+import { BookDocument } from './books.model';
+import { BooksService } from './books.service';
+import { CreateBookDto } from './dto/create-book.dto';
+import { CreateBookSchema } from './joi/create-book.schema';
 
 @Controller('books')
 export class BooksController {
@@ -17,7 +20,9 @@ export class BooksController {
 
   @HttpCode(201)
   @Post()
-  create(@Body() dto: Omit<BookDocument, '_id'>): Promise<BookDocument> {
+  create(
+    @Body(new JoiValidationPipe(CreateBookSchema)) dto: CreateBookDto,
+  ): Promise<BookDocument> {
     return this.bookService.create(dto);
   }
 
@@ -30,6 +35,7 @@ export class BooksController {
   @HttpCode(200)
   @Get()
   getAll(): Promise<BookDocument[]> {
+    console.log('BooksController/getAll --->>>');
     return this.bookService.getAll();
   }
 
@@ -37,7 +43,7 @@ export class BooksController {
   @Put(':id')
   update(
     @Param('id') id: string,
-    @Body() dto: BookDocument,
+    @Body() dto: CreateBookDto,
   ): Promise<BookDocument | null> {
     return this.bookService.update(id, dto);
   }
