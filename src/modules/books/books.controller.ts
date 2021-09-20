@@ -35,7 +35,6 @@ export class BooksController {
   @HttpCode(200)
   @Get()
   getAll(): Promise<BookDocument[]> {
-    console.log('BooksController/getAll --->>>');
     return this.bookService.getAll();
   }
 
