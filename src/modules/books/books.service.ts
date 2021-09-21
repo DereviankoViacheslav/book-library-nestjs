@@ -1,4 +1,3 @@
-import { HttpException, HttpStatus } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -20,7 +19,6 @@ export class BooksService {
   }
 
   getAll(): Promise<BookDocument[]> {
-    // throw new HttpException('test', HttpStatus.INTERNAL_SERVER_ERROR);
     return this.BookModel.find().exec();
   }
 
